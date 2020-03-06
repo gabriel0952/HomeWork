@@ -2,6 +2,10 @@ package com.example.homework;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Message;
+import android.os.Parcelable;
+import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -15,6 +19,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,13 +29,26 @@ public class MaskInfoListActivity extends AppCompatActivity {
     @BindView(R.id.title_textview)
     TextView textView;
 
-    ArrayList maskInfoList = new ArrayList();
+    private ListView listView;
+    private ItemArrayAdapter itemArrayAdapter;
+
+    private static final String TAG = "CSVTOSTRING";
+
+    List<String[]> maskInfoList = new ArrayList<String[]>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maskinfolist_activity);
         ButterKnife.bind(this);
+
+        listView = (ListView)findViewById(R.id.maskListView);
+        itemArrayAdapter = new ItemArrayAdapter(getApplicationContext(), R.layout.list_item);
+
+        Parcelable state = listView.onSaveInstanceState();
+        listView.setAdapter(itemArrayAdapter);
+        listView.onRestoreInstanceState(state);
+
         dialogAndDownload();
     }
 
@@ -40,15 +59,27 @@ public class MaskInfoListActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
 
-        new Thread(()->{
+        new Thread(() -> {
             getMaskInfo();
-            formatListData();
+            Log.v(TAG, String.format("I am here"));
+
+            runOnUiThread(v->{
+                for (String[] maskData:maskInfoList) {
+                    itemArrayAdapter.add(maskData);
+                }
+            });
+
+
             dialog.dismiss();
         }).start();
     }
 
     private void formatListData() {
-
+        String message = "CHECKSYRING";
+        System.out.println(maskInfoList.size());
+//        for (int i = 0; i < 11; i++) {
+//            Log.v(TAG, String.format("[%s] string is: %d %s", message, maskInfoList.size(), maskInfoList.get(i)));
+//        }
     }
 
     private void getMaskInfo() {
@@ -70,15 +101,37 @@ public class MaskInfoListActivity extends AppCompatActivity {
     }
 
     private void csvDownloadAndtoString(HttpURLConnection httpURLConnection) throws IOException {
+        String message = "CHECKSYRING";
         InputStream inputStream = httpURLConnection.getInputStream();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder total = new StringBuilder();
-        for (String line; (line = reader.readLine()) != null; ) {
-            total.append(line).append('\n');
-            String[] row = line.split(",");
-            maskInfoList.add(row);
+
+        try {
+            String csvLine;
+            while ((csvLine = reader.readLine()) != null) {
+                String[] row = csvLine.split(",");
+                maskInfoList.add(row);
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException("Error in reading CSV file: "+ex);
+        } finally {
+            try {
+                inputStream.close();
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Error while closing input stream: "+e);
+            }
         }
-        System.out.print(total);
+
+//
+//        for (String line; (line = reader.readLine()) != null; ) {
+//            total.append(line).append('\n');
+//            String[] row = line.split(",");
+//            System.out.print(line);
+//            Log.v(TAG, String.format("[%s] string is: %s", message, row));
+//            maskInfoList.add(row);
+//        }
+        // System.out.print(total);
     }
 }
