@@ -63,11 +63,11 @@ public class MaskInfoListActivity extends AppCompatActivity {
             getMaskInfo();
             Log.v(TAG, String.format("I am here"));
 
-            runOnUiThread(v->{
-                for (String[] maskData:maskInfoList) {
-                    itemArrayAdapter.add(maskData);
-                }
-            });
+//            runOnUiThread(v->{
+//                for (String[] maskData:maskInfoList) {
+//                    itemArrayAdapter.add(maskData);
+//                }
+//            });
 
 
             dialog.dismiss();
