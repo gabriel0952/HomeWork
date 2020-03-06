@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +20,8 @@ public class ItemArrayAdapter extends ArrayAdapter {
         TextView pharmacyname;
         TextView pharmacyaddress;
         TextView telephone;
-        TextView maskamount;
+        TextView adultmaskamount;
+        TextView childmaskamount;
         TextView updatetime;
     }
 
@@ -55,7 +55,8 @@ public class ItemArrayAdapter extends ArrayAdapter {
             viewHolder.pharmacyname = (TextView) row.findViewById(R.id.pharmacy_name_textView);
             viewHolder.pharmacyaddress = (TextView) row.findViewById(R.id.pharmacy_address_textView);
             viewHolder.telephone = (TextView) row.findViewById(R.id.telephone_textView);
-            viewHolder.maskamount = (TextView) row.findViewById(R.id.amount_textView);
+            viewHolder.adultmaskamount = (TextView) row.findViewById(R.id.adult_amount_textView);
+            viewHolder.childmaskamount = (TextView) row.findViewById(R.id.child_amount_textView);
             viewHolder.updatetime = (TextView) row.findViewById(R.id.update_time_textView);
             row.setTag(viewHolder);
         } else {
@@ -66,7 +67,8 @@ public class ItemArrayAdapter extends ArrayAdapter {
         viewHolder.pharmacyname.setText(stat[1]);
         viewHolder.pharmacyaddress.setText(stat[2]);
         viewHolder.telephone.setText(stat[3]);
-        viewHolder.maskamount.setText(stat[4]+"/"+stat[5]);
+        viewHolder.adultmaskamount.setText("成人口罩剩餘數: "+stat[4]);
+        viewHolder.childmaskamount.setText("兒童口罩剩餘數: "+stat[5]);
         viewHolder.updatetime.setText(stat[6]);
 
         return row;
