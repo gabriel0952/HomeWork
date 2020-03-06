@@ -63,6 +63,15 @@ public class MaskInfoListActivity extends AppCompatActivity {
             getMaskInfo();
             Log.v(TAG, String.format("I am here"));
 
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    for (String[] maskData:maskInfoList) {
+                        itemArrayAdapter.add(maskData);
+                    }
+                }
+            });
+
 //            runOnUiThread(v->{
 //                for (String[] maskData:maskInfoList) {
 //                    itemArrayAdapter.add(maskData);

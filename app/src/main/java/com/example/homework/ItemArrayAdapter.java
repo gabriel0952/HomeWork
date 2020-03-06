@@ -20,6 +20,7 @@ public class ItemArrayAdapter extends ArrayAdapter {
     static class ItemViewHolder {
         TextView pharmacyname;
         TextView pharmacyaddress;
+        TextView telephone;
         TextView maskamount;
         TextView updatetime;
     }
@@ -40,7 +41,7 @@ public class ItemArrayAdapter extends ArrayAdapter {
 
     @Override
     public String[] getItem(int index) {
-        return this.maskInfoList.get(index);
+        return this.maskInfoList.get(index+1);
     }
 
     @Override
@@ -53,6 +54,7 @@ public class ItemArrayAdapter extends ArrayAdapter {
             viewHolder = new ItemViewHolder();
             viewHolder.pharmacyname = (TextView) row.findViewById(R.id.pharmacy_name_textView);
             viewHolder.pharmacyaddress = (TextView) row.findViewById(R.id.pharmacy_address_textView);
+            viewHolder.telephone = (TextView) row.findViewById(R.id.telephone_textView);
             viewHolder.maskamount = (TextView) row.findViewById(R.id.amount_textView);
             viewHolder.updatetime = (TextView) row.findViewById(R.id.update_time_textView);
             row.setTag(viewHolder);
@@ -61,10 +63,11 @@ public class ItemArrayAdapter extends ArrayAdapter {
         }
 
         String[] stat = getItem(position);
-        viewHolder.pharmacyname.setText(stat[0]);
-        viewHolder.pharmacyaddress.setText(stat[1]);
-        viewHolder.maskamount.setText(stat[2]);
-        viewHolder.updatetime.setText(stat[3]);
+        viewHolder.pharmacyname.setText(stat[1]);
+        viewHolder.pharmacyaddress.setText(stat[2]);
+        viewHolder.telephone.setText(stat[3]);
+        viewHolder.maskamount.setText(stat[4]+"/"+stat[5]);
+        viewHolder.updatetime.setText(stat[6]);
 
         return row;
     }
