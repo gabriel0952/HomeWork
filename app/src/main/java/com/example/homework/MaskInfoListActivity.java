@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -33,9 +37,11 @@ public class MaskInfoListActivity extends AppCompatActivity {
     Button reloadButton;
 
     private ListView listView;
+    private Spinner citySpinner;
     private ItemArrayAdapter itemArrayAdapter;
 
     List<String[]> maskInfoList = new ArrayList<String[]>();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +49,25 @@ public class MaskInfoListActivity extends AppCompatActivity {
         setContentView(R.layout.maskinfolist_activity);
         ButterKnife.bind(this);
 
+        citySpinner = (Spinner) findViewById(R.id.spinner);
+        citySpinner.setOnItemSelectedListener(spnOnItemSelected);
+
         reloadButton.setOnClickListener(v -> dialogAndDownload());
 
         dialogAndDownload();
     }
+
+    private AdapterView.OnItemSelectedListener spnOnItemSelected = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            System.out.println("I select the " + id);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 
     private void initailListAndAdapter() {
         maskInfoList.clear();
