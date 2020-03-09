@@ -40,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
         login_button.setOnClickListener(v -> loginCheckUp());
     }
 
+    // it's only for make sense
     private void preCheckLogin() {
         String[] defaulterUser = readPreference();
+        user_password_editText.setText(defaulterUser[1]);
+        user_account_editText.setText(defaulterUser[0]);
 
         if (defaulterUser[0].equals(ACCOUNT) && defaulterUser[1].equals(PASSWORD)) {
             // Change Activity
@@ -74,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int TO_SECOND = 321;
 
+    // setup the intent and bundle to start the mask information activity
+    // in order to handle the logout action, use the startActivityForResult
     private void doMaskInfoListActivity(String u_account) {
         Intent intent = new Intent();
         intent.setClass(this, MaskInfoListActivity.class);
@@ -85,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, TO_SECOND);
     }
 
+    // read preference file
     private String[] readPreference() {
         SharedPreferences preferences = getSharedPreferences(FILE_NAME, 0);
         String defaultUserAccount = preferences.getString(KEY1, "");
@@ -93,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         return new String[]{defaultUserAccount, defaultUserPassword};
     }
 
+    // write the user account and password preference file
     private void writePreferences(String u_account, String u_password) {
         SharedPreferences preferences = getSharedPreferences(FILE_NAME, 0);
         SharedPreferences.Editor editor = preferences.edit();
@@ -104,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show();
     }
 
+    // clean the preference while logout
     private void cleanPreferences() {
         SharedPreferences preferences = getSharedPreferences(FILE_NAME, 0);
         SharedPreferences.Editor editor = preferences.edit();
@@ -120,9 +128,12 @@ public class MainActivity extends AppCompatActivity {
             case TO_SECOND:
                 if (resultCode == RESULT_OK) {
                     cleanPreferences();
-                    System.out.println("登出");
+                    user_account_editText.setText("");
+                    user_password_editText.setText("");
                 } else if (resultCode == RESULT_CANCELED) {
-                    System.out.println("返回");
+                    cleanPreferences();
+                    user_account_editText.setText("");
+                    user_password_editText.setText("");
                 }
         }
 
