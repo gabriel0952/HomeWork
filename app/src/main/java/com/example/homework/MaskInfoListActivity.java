@@ -1,6 +1,9 @@
 package com.example.homework;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
@@ -17,6 +20,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.toolbox.StringRequest;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +32,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +45,11 @@ public class MaskInfoListActivity extends AppCompatActivity {
 
     private ListView listView;
     private Spinner citySpinner;
+    private String[] cityArray;
     private ItemArrayAdapter itemArrayAdapter;
+    private Map<String, List> cityMap = new HashMap<String, List>();
+
+    private int selectedCity = -1;
 
     List<String[]> maskInfoList = new ArrayList<String[]>();
 
@@ -50,6 +60,7 @@ public class MaskInfoListActivity extends AppCompatActivity {
         setContentView(R.layout.maskinfolist_activity);
         ButterKnife.bind(this);
 
+        cityArray = getResources().getStringArray(R.array.city);
         citySpinner = (Spinner) findViewById(R.id.spinner);
         citySpinner.setOnItemSelectedListener(spnOnItemSelected);
 
@@ -61,7 +72,11 @@ public class MaskInfoListActivity extends AppCompatActivity {
     private AdapterView.OnItemSelectedListener spnOnItemSelected = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            System.out.println("I select the " + id);
+            selectedCity = (int) id;
+//            itemArrayAdapter.selectedCity = (int) id;
+//            itemArrayAdapter.cityInfoMap = cityMap;
+            System.out.println("I select the " + cityArray[(int) id]);
+            dialogAndDownload();
         }
 
         @Override
@@ -72,7 +87,7 @@ public class MaskInfoListActivity extends AppCompatActivity {
 
     private void initailListAndAdapter() {
         maskInfoList.clear();
-        listView = (ListView)findViewById(R.id.maskListView);
+        listView = (ListView) findViewById(R.id.maskListView);
         itemArrayAdapter = new ItemArrayAdapter(getApplicationContext(), R.layout.list_item);
 
         Parcelable state = listView.onSaveInstanceState();
@@ -95,7 +110,7 @@ public class MaskInfoListActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    for (String[] maskData:maskInfoList) {
+                    for (String[] maskData : maskInfoList) {
                         itemArrayAdapter.add(maskData);
                     }
                 }
@@ -130,16 +145,39 @@ public class MaskInfoListActivity extends AppCompatActivity {
             String csvLine;
             while ((csvLine = reader.readLine()) != null) {
                 String[] row = csvLine.split(",");
-                maskInfoList.add(row);
+
+                if (selectedCity >= 0 && row[2].substring(0, 3).equals(cityArray[selectedCity])) {
+                    System.out.println("** I am here: " + selectedCity);
+                    maskInfoList.add(row);
+                }
+
+//                maskInfoList.add(row);
+                filterCityInfo(row[2]);
             }
         } catch (IOException ex) {
-            throw new RuntimeException("Error in reading CSV file: "+ex);
+            throw new RuntimeException("Error in reading CSV file: " + ex);
         } finally {
             try {
                 inputStream.close();
+            } catch (IOException e) {
+                throw new RuntimeException("Error while closing input stream: " + e);
             }
-            catch (IOException e) {
-                throw new RuntimeException("Error while closing input stream: "+e);
+        }
+    }
+
+    private void filterCityInfo(String s1) {
+        for (String s : cityArray) {
+            if (s1.substring(0, 3).equals(s)) {
+//                if (!cityMap.containsKey(s)) {
+//                    List<Integer> idList = new ArrayList<Integer>();
+//                    idList.add(maskInfoList.size() - 1);
+//                    cityMap.put(s, idList);
+//                } else {
+//                    List idList = cityMap.get(s);
+//                    idList.add(maskInfoList.size() - 1);
+//                    cityMap.put(s, idList);
+//                }
+                break;
             }
         }
     }

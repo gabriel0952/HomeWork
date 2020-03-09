@@ -1,6 +1,7 @@
 package com.example.homework;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ItemArrayAdapter extends ArrayAdapter {
     private List<String[]> maskInfoList = new ArrayList<String[]>();
+    public Map<String, List> cityInfoMap = new HashMap<String, List>();
+    public int selectedCity = -1;
 
     static class ItemViewHolder {
         TextView pharmacyname;
@@ -72,5 +77,10 @@ public class ItemArrayAdapter extends ArrayAdapter {
         viewHolder.updatetime.setText(stat[6]);
 
         return row;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 }
