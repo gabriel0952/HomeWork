@@ -52,6 +52,8 @@ public class MaskInfoListActivity extends AppCompatActivity {
     private String[] cityArray;
     private ItemArrayAdapter itemArrayAdapter;
 
+    protected static final String KEY2 = "LOGOUT";
+
     private int selectedCity = -1;
 
     List<String[]> maskInfoList = new ArrayList<String[]>();
@@ -176,6 +178,10 @@ public class MaskInfoListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_logout:
                 // addSomething();
+                Intent intent = new Intent();
+                intent.putExtra(KEY2, "something in return");
+                setResult(RESULT_OK, intent);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

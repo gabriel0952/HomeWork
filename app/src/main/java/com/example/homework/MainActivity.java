@@ -1,5 +1,6 @@
 package com.example.homework;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private static final int TO_SECOND = 321;
+
     private void doMaskInfoListActivity(String u_account) {
         Intent intent = new Intent();
         intent.setClass(this, MaskInfoListActivity.class);
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString(KEY1, u_account);
         intent.putExtras(bundle);
 
-        startActivity(intent);
+        startActivityForResult(intent, TO_SECOND);
     }
 
     private String[] readPreference() {
@@ -100,4 +103,30 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show();
     }
+
+    private void cleanPreferences() {
+        SharedPreferences preferences = getSharedPreferences(FILE_NAME, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.clear();
+        editor.commit();
+
+        Toast.makeText(this, "Logout Successfully", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case TO_SECOND:
+                if (resultCode == RESULT_OK) {
+                    cleanPreferences();
+                    System.out.println("登出");
+                } else if (resultCode == RESULT_CANCELED) {
+                    System.out.println("返回");
+                }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }
