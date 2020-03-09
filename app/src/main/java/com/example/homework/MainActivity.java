@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILE_NAME = "user_profile";
     private static final String KEY1 = "user_account";
     private static final String KEY2 = "user_password";
-
+    private static final int TO_SECOND = 321;
     private static final String ACCOUNT = "Ray001";
     private static final String PASSWORD = "123456";
 
@@ -74,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Login Unsuccessfully", Toast.LENGTH_SHORT).show();
         }
     }
-
-    private static final int TO_SECOND = 321;
 
     // setup the intent and bundle to start the mask information activity
     // in order to handle the logout action, use the startActivityForResult
@@ -136,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
                     user_password_editText.setText("");
                 }
         }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 }

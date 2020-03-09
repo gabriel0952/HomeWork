@@ -44,7 +44,7 @@ public class ItemArrayAdapter extends ArrayAdapter {
 
     @Override
     public String[] getItem(int index) {
-        return this.maskInfoList.get(index+1);
+        return this.maskInfoList.get(index + 1);
     }
 
     @Override
@@ -63,15 +63,15 @@ public class ItemArrayAdapter extends ArrayAdapter {
             viewHolder.updatetime = (TextView) row.findViewById(R.id.update_time_textView);
             row.setTag(viewHolder);
         } else {
-            viewHolder = (ItemViewHolder)row.getTag();
+            viewHolder = (ItemViewHolder) row.getTag();
         }
 
         String[] stat = getItem(position);
         viewHolder.pharmacyname.setText(stat[1]);
         viewHolder.pharmacyaddress.setText(stat[2]);
         viewHolder.telephone.setText(stat[3]);
-        viewHolder.adultmaskamount.setText("成人口罩剩餘數: "+stat[4]);
-        viewHolder.childmaskamount.setText("兒童口罩剩餘數: "+stat[5]);
+        viewHolder.adultmaskamount.setText("成人口罩剩餘數: " + stat[4]);
+        viewHolder.childmaskamount.setText("兒童口罩剩餘數: " + stat[5]);
         viewHolder.updatetime.setText(stat[6]);
 
         return row;

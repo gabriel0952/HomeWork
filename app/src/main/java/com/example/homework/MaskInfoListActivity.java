@@ -203,7 +203,6 @@ public class MaskInfoListActivity extends AppCompatActivity {
         });
 
         ad.setNegativeButton("NO", (d, w) -> {
-
         });
         ad.show();
     }
