@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,7 +51,6 @@ public class MaskInfoListActivity extends AppCompatActivity {
     private Spinner citySpinner;
     private String[] cityArray;
     private ItemArrayAdapter itemArrayAdapter;
-    private Map<String, List> cityMap = new HashMap<String, List>();
 
     private int selectedCity = -1;
 
@@ -73,8 +76,6 @@ public class MaskInfoListActivity extends AppCompatActivity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedCity = (int) id;
-//            itemArrayAdapter.selectedCity = (int) id;
-//            itemArrayAdapter.cityInfoMap = cityMap;
             System.out.println("I select the " + cityArray[(int) id]);
             dialogAndDownload();
         }
@@ -150,9 +151,6 @@ public class MaskInfoListActivity extends AppCompatActivity {
                     System.out.println("** I am here: " + selectedCity);
                     maskInfoList.add(row);
                 }
-
-//                maskInfoList.add(row);
-                filterCityInfo(row[2]);
             }
         } catch (IOException ex) {
             throw new RuntimeException("Error in reading CSV file: " + ex);
@@ -165,20 +163,22 @@ public class MaskInfoListActivity extends AppCompatActivity {
         }
     }
 
-    private void filterCityInfo(String s1) {
-        for (String s : cityArray) {
-            if (s1.substring(0, 3).equals(s)) {
-//                if (!cityMap.containsKey(s)) {
-//                    List<Integer> idList = new ArrayList<Integer>();
-//                    idList.add(maskInfoList.size() - 1);
-//                    cityMap.put(s, idList);
-//                } else {
-//                    List idList = cityMap.get(s);
-//                    idList.add(maskInfoList.size() - 1);
-//                    cityMap.put(s, idList);
-//                }
-                break;
-            }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                // addSomething();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

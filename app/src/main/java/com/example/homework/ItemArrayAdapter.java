@@ -18,8 +18,6 @@ import java.util.Map;
 
 public class ItemArrayAdapter extends ArrayAdapter {
     private List<String[]> maskInfoList = new ArrayList<String[]>();
-    public Map<String, List> cityInfoMap = new HashMap<String, List>();
-    public int selectedCity = -1;
 
     static class ItemViewHolder {
         TextView pharmacyname;
