@@ -70,7 +70,6 @@ public class MaskInfoListActivity extends AppCompatActivity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             selectedCity = (int) id;
-            System.out.println("I select the " + cityArray[(int) id]);
             dialogAndDownload();
         }
 
@@ -94,8 +93,8 @@ public class MaskInfoListActivity extends AppCompatActivity {
     // setup the dialog and use the new thread to download mask information
     private void dialogAndDownload() {
         ProgressDialog dialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
-        dialog.setTitle("Wait");
-        dialog.setMessage("Downloading...");
+        dialog.setTitle("請稍後");
+        dialog.setMessage("取得資料中...");
         dialog.setCancelable(false);
         dialog.show();
         initialListAndAdapter();
@@ -144,7 +143,6 @@ public class MaskInfoListActivity extends AppCompatActivity {
                 String[] row = csvLine.split(",");
 
                 if (selectedCity >= 0 && row[2].substring(0, 3).equals(cityArray[selectedCity])) {
-                    System.out.println("** I am here: " + selectedCity);
                     maskInfoList.add(row);
                 }
             }

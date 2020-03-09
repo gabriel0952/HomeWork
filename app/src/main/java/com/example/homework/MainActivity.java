@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (defaulterUser[0].equals(ACCOUNT) && defaulterUser[1].equals(PASSWORD)) {
             // Change Activity
-            ProgressDialog dialog = ProgressDialog.show(this, "Wait", "Login...", true, false);
+            ProgressDialog dialog = ProgressDialog.show(this, "請稍後", "登入中...", true, false);
             new Thread(() -> {
                 try {
                     Thread.sleep(2000);
