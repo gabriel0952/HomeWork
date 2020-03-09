@@ -43,15 +43,17 @@
         </ListView>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/reloadButton"
+    <ImageButton
+        android:id="@+id/reload_imageButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/round_autorenew_black_18dp"
-        android:backgroundTint="#2196F3"
+        android:background="@drawable/bg_round_button"
+        android:scaleType="centerCrop"
+        android:tint="#F1EEEE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/round_autorenew_black_18dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

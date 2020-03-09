@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,8 +34,8 @@ import butterknife.ButterKnife;
 public class MaskInfoListActivity extends AppCompatActivity {
     @BindView(R.id.title_textview)
     TextView textView;
-    @BindView(R.id.reloadButton)
-    Button reloadButton;
+    @BindView(R.id.reload_imageButton)
+    ImageButton imageButton;
 
     private ListView listView;
     private Spinner citySpinner;
@@ -52,7 +53,7 @@ public class MaskInfoListActivity extends AppCompatActivity {
         citySpinner = (Spinner) findViewById(R.id.spinner);
         citySpinner.setOnItemSelectedListener(spnOnItemSelected);
 
-        reloadButton.setOnClickListener(v -> dialogAndDownload());
+        imageButton.setOnClickListener(v -> dialogAndDownload());
 
         dialogAndDownload();
     }
