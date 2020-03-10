@@ -46,16 +46,15 @@
 
     <ImageButton
         android:id="@+id/reload_imageButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="36dp"
         android:background="@drawable/bg_round_button"
+        android:padding="8dp"
         android:scaleType="centerCrop"
-        android:tint="#F1EEEE"
-        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/round_autorenew_black_18dp" />
+        app:srcCompat="@drawable/refresh" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
