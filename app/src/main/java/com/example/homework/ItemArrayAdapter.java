@@ -44,7 +44,7 @@ public class ItemArrayAdapter extends ArrayAdapter {
 
     @Override
     public String[] getItem(int index) {
-        return this.maskInfoList.get(index + 1);
+        return this.maskInfoList.get(index);
     }
 
     @Override
