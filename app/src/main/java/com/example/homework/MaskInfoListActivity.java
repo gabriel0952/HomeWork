@@ -141,13 +141,7 @@ public class MaskInfoListActivity extends AppCompatActivity {
             String csvLine;
             while ((csvLine = reader.readLine()) != null) {
                 String[] row = csvLine.split(",");
-
-                if (row[2].substring(0, 3).equals("連江縣")) {
-                    System.out.println("*** I am here: " + row[1]);
-                }
-
                 if (selectedCity >= 0 && row[2].substring(0, 3).equals(cityArray[selectedCity])) {
-
                     maskInfoList.add(row);
                 }
             }

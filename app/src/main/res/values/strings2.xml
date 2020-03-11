@@ -3,6 +3,7 @@
 <resources>
     <string-array name="city">
         <item>臺北市</item>
+        <item>新北市</item>
         <item>桃園市</item>
         <item>臺中市</item>
         <item>臺南市</item>
