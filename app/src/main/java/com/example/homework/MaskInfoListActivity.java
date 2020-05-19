@@ -2,7 +2,6 @@ package com.example.homework;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -12,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -57,7 +57,10 @@ public class MaskInfoListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         cityArray = getResources().getStringArray(R.array.city);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.my_spinner, cityArray);
+        adapter.setDropDownViewResource(R.layout.my_spinner_dropdown);
         citySpinner = (Spinner) findViewById(R.id.spinner);
+        citySpinner.setAdapter(adapter);
         citySpinner.setOnItemSelectedListener(spnOnItemSelected);
 
         imageButton.setOnClickListener(v -> dialogAndDownload());
@@ -65,7 +68,8 @@ public class MaskInfoListActivity extends AppCompatActivity {
         dialogAndDownload();
     }
 
-    // the selected listener for spinner
+//     the selected listener for spinner
+
     private AdapterView.OnItemSelectedListener spnOnItemSelected = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -78,17 +82,6 @@ public class MaskInfoListActivity extends AppCompatActivity {
             // no
         }
     };
-
-    // initial list and adapter
-    private void initialListAndAdapter() {
-        maskInfoList.clear();
-        listView = (ListView) findViewById(R.id.maskListView);
-        itemArrayAdapter = new ItemArrayAdapter(getApplicationContext(), R.layout.list_item);
-
-        Parcelable state = listView.onSaveInstanceState();
-        listView.setAdapter(itemArrayAdapter);
-        listView.onRestoreInstanceState(state);
-    }
 
     // setup the dialog and use the new thread to download mask information
     private void dialogAndDownload() {
@@ -111,6 +104,17 @@ public class MaskInfoListActivity extends AppCompatActivity {
             });
             dialog.dismiss();
         }).start();
+    }
+
+    // initial list and adapter
+    private void initialListAndAdapter() {
+        maskInfoList.clear();
+        listView = (ListView) findViewById(R.id.maskListView);
+        itemArrayAdapter = new ItemArrayAdapter(getApplicationContext(), R.layout.list_item);
+
+        Parcelable state = listView.onSaveInstanceState();
+        listView.setAdapter(itemArrayAdapter);
+        listView.onRestoreInstanceState(state);
     }
 
     // download the mask information from URL
@@ -199,8 +203,7 @@ public class MaskInfoListActivity extends AppCompatActivity {
             finish();
         });
 
-        ad.setNegativeButton("NO", (d, w) -> {
-        });
+        ad.setNegativeButton("NO", (d, w) -> {});
         ad.show();
     }
 }

@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY1 = "user_account";
     private static final String KEY2 = "user_password";
     private static final int TO_SECOND = 321;
+
     private static final String ACCOUNT = "Ray001";
     private static final String PASSWORD = "123456";
 

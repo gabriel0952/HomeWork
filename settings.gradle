@@ -1,2 +1,3 @@
 rootProject.name='HomeWork'
 include ':app'
+include ':DemoTest'
