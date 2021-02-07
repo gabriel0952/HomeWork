@@ -1,4 +1,4 @@
-# HomeWork
+# MaskCheck
 Get mask information from gov, and show it.
 
 ## Overview
