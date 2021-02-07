@@ -16,4 +16,4 @@ It use the:
 
 ## Feedback
 I still learn the android, so if has any problem.\
-Feel free to leave comments or email me.
+Feel free to give comments or email me.
